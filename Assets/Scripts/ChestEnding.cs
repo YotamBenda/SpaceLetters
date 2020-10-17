@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class ChestEnding : MonoBehaviour
+
+public class ChestEnding : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField]
     private Animator chestAnim;
@@ -14,10 +15,9 @@ public class ChestEnding : MonoBehaviour
         chestAnim.SetTrigger("isOpened");
     }
 
-    private void OnMouseDown()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        PlayNext();
+        chestAnim.SetTrigger("isOpened");
     }
-
 
 }
