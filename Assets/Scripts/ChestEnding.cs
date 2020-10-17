@@ -8,12 +8,16 @@ public class ChestEnding : MonoBehaviour
 {
     [SerializeField]
     private Animator chestAnim;
-    [SerializeField]
-    private Animator mainGoalAnim;
 
     public void PlayNext()
     {
-        mainGoalAnim.SetTrigger("isOpened");
+        chestAnim.SetTrigger("isOpened");
     }
+
+    private void OnMouseDown()
+    {
+        PlayNext();
+    }
+
 
 }
