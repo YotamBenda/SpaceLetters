@@ -23,6 +23,12 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     [Range(330,-330)]
     private float X_RANGE;
+
+    private float Y_MIN = -605f;
+    private float Y_MAX = -50f;
+    private float X_MIN = -330f;
+    private float X_MAX = 330f;
+
     private void Awake()
     {
         rectTrans = GetComponent<RectTransform>();
@@ -34,7 +40,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnDrag(PointerEventData eventData)
     {
-            rectTrans.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        rectTrans.anchoredPosition += eventData.delta / canvas.scaleFactor;
 
     }
 
@@ -50,18 +56,22 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collSprite = collision.GetComponent<Image>().sprite;
-        collAnim = collision.GetComponent<Animator>();
+        if(collision.gameObject.tag == "WordImg")
+        {
+            collSprite = collision.GetComponent<Image>().sprite;
+            collAnim = collision.GetComponent<Animator>();
 
-        if(scoreManager.CheckIfCorrect(collSprite) == true)
-        {
-            Destroy(collision.gameObject);
-            wordsSpawner.CheckGameOver();
+            if (scoreManager.CheckIfCorrect(collSprite) == true)
+            {
+                Destroy(collision.gameObject);
+                wordsSpawner.CheckGameOver();
+            }
+            else
+            {
+                collAnim.SetTrigger("Incorrect");
+            }
         }
-        else
-        {
-            collAnim.SetTrigger("Incorrect");
-        }
+        
     }
     
 }
